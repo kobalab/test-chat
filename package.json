@@ -2,8 +2,12 @@
   "name": "@kobalab/test-chat",
   "version": "1.0.0",
   "description": "できるだけ単純にSocket.ioでチャットサービスを作ってみる",
-  "main": "index.js",
+  "private": true,
+  "bin": {
+    "test-chat": "./src/js/server.js"
+  },
   "scripts": {
+    "start": "node src/js/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
