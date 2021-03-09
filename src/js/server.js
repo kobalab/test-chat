@@ -9,11 +9,17 @@ const session = require('express-session')({
                             name:   'CHAT',
                             secret: 'keyboard cat',
                             resave: false,
-                            saveUninitialized: true });
+                            saveUninitialized: false });
+const passport = require('./lib/passport');
 
 const app = express();
 app.disable('x-powered-by');
 app.use(session);
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(express.urlencoded({ extended: false }));
+app.post('/', passport.authenticate('local', { successRedirect: '/',
+                                               failureRedirect: '/' }));
 app.use(express.static(path.join(__dirname, '../../www')));
 
 const http = require('http').createServer(app);
