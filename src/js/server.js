@@ -10,7 +10,10 @@ const app = express();
 app.disable('x-powered-by');
 app.use(express.static(path.join(__dirname, '../../www')));
 
-app.listen(3000, ()=>{
+const http = require('http').createServer(app);
+const io   = require('socket.io')(http);
+
+http.listen(3000, ()=>{
     console.log('Server start on http://127.0.0.1:3000');
 }).on('error', (e)=>{
     console.error(''+e);
