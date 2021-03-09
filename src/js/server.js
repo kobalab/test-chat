@@ -5,9 +5,15 @@
 const path = require('path');
 
 const express = require('express');
+const session = require('express-session')({
+                            name:   'CHAT',
+                            secret: 'keyboard cat',
+                            resave: false,
+                            saveUninitialized: true });
 
 const app = express();
 app.disable('x-powered-by');
+app.use(session);
 app.use(express.static(path.join(__dirname, '../../www')));
 
 const http = require('http').createServer(app);
