@@ -11,6 +11,8 @@ const session = require('express-session')({
                             resave: false,
                             saveUninitialized: false });
 const passport = require('./lib/passport');
+const socket_io_session
+               = require('@kobalab/socket.io-session')(session, passport);
 
 const app = express();
 app.disable('x-powered-by');
@@ -24,6 +26,13 @@ app.use(express.static(path.join(__dirname, '../../www')));
 
 const http = require('http').createServer(app);
 const io   = require('socket.io')(http);
+io.use(socket_io_session.express_session);
+io.use(socket_io_session.passport_initialize);
+io.use(socket_io_session.passport_session);
+
+io.on('connection', sock=>{
+    console.log('CONNECT:', sock.request.user);
+});
 
 http.listen(3000, ()=>{
     console.log('Server start on http://127.0.0.1:3000');
