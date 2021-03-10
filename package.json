@@ -8,6 +8,7 @@
   },
   "scripts": {
     "start": "node src/js/server.js",
+    "build": "webpack --mode development --devtool inline-source-map",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
