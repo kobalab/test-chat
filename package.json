@@ -26,6 +26,7 @@
     "webpack-cli": "^4.5.0"
   },
   "dependencies": {
+    "@kobalab/socket.io-session": "^1.0.3",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "jquery": "^3.6.0",
