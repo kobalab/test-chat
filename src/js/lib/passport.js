@@ -20,4 +20,18 @@ passport.use(new local.Strategy(
     }
 ));
 
+const hatena = require('passport-hatena');
+
+passport.use(new hatena.Strategy(
+    require('../../../etc/hatena.json'),
+    (token, tokenSecret, profile, done)=>{
+        let user = {
+            id:   profile.id + '@hatena',
+            name: profile.displayName,
+            icon: profile.photos[0].value
+        };
+        done(null, user);
+    }
+));
+
 module.exports = passport;

@@ -22,6 +22,11 @@ app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
 app.post('/', passport.authenticate('local', { successRedirect: '/',
                                                failureRedirect: '/' }));
+app.post('/auth/hatena', passport.authenticate('hatena',
+                                                { scope: ['read_public'] }));
+app.get('/auth/hatena', passport.authenticate('hatena',
+                                                { successRedirect: '/',
+                                                  failureRedirect: '/' }));
 app.use(express.static(path.join(__dirname, '../../www')));
 
 const http = require('http').createServer(app);
