@@ -32,6 +32,7 @@
     "express-session": "^1.17.1",
     "jquery": "^3.6.0",
     "passport": "^0.4.1",
+    "passport-hatena": "0.0.2",
     "passport-local": "^1.0.0",
     "socket.io": "^3.1.2"
   }
