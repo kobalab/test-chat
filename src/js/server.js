@@ -31,7 +31,8 @@ io.use(socket_io_session.passport_initialize);
 io.use(socket_io_session.passport_session);
 
 io.on('connection', sock=>{
-    console.log('CONNECT:', sock.request.user);
+    console.log('CONNECT:', sock.id, sock.request.user);
+    sock.emit('hello', sock.request.user);
 });
 
 http.listen(3000, ()=>{
