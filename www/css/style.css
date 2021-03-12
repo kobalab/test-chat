@@ -1,0 +1,12 @@
+#user {
+    text-align: right;
+}
+#user img {
+    width:  32px;
+    height: 32px;
+    vertical-align: middle;
+    border-radius: 50%;
+}
+#user span {
+    font-size: 16px;
+}
