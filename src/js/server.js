@@ -20,13 +20,14 @@ app.use(session);
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
-app.post('/', passport.authenticate('local', { successRedirect: '/',
-                                               failureRedirect: '/' }));
+app.post('/auth/', passport.authenticate('local',
+                                        { successRedirect: '/',
+                                          failureRedirect: '/auth/' }));
 app.post('/auth/hatena', passport.authenticate('hatena',
-                                                { scope: ['read_public'] }));
+                                        { scope: ['read_public'] }));
 app.get('/auth/hatena', passport.authenticate('hatena',
-                                                { successRedirect: '/',
-                                                  failureRedirect: '/' }));
+                                        { successRedirect: '/',
+                                          failureRedirect: '/auth/' }));
 app.use(express.static(path.join(__dirname, '../../www')));
 
 const http = require('http').createServer(app);

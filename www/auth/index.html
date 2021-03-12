@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <title>Login</title>
+    <link rel="icon" href="https://socket.io/images/favicon.png">
+    <script src="/socket.io/socket.io.js" defer></script>
+  </head>
+  <body>
+    <div>
+      <form method="POST" action="./">
+        <input name="login" value="koba">
+        <input name="passwd" value="passwd" type="hidden">
+        <input type="submit" value="LOGIN">
+      </form>
+      <form method="POST" action="./hatena">
+        <input type="submit" value="はてな で LOGIN">
+      </form>
+    </div>
+  </body>
+</html>
