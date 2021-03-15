@@ -36,10 +36,7 @@ io.use(socket_io_session.express_session);
 io.use(socket_io_session.passport_initialize);
 io.use(socket_io_session.passport_session);
 
-io.on('connection', sock=>{
-    console.log('CONNECT:', sock.id, sock.request.user);
-    sock.emit('hello', sock.request.user);
-});
+const lobby = require('./lib/lobby')(io);
 
 http.listen(3000, ()=>{
     console.log('Server start on http://127.0.0.1:3000');
