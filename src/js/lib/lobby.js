@@ -18,33 +18,42 @@ class Lobby {
         let user = client.request.user;
         if (! user) return client.emit('hello', null);
         if (this._user[user.id]) {
-            client.emit('error', 'すでに接続済です');
-            client.disconnect(true);
+            if (this._user[user.id].socket) {
+                client.emit('error', 'すでに接続済です');
+                client.disconnect(true);
+                return;
+            }
+            if (this._user[user.id].room) {
+                let id = this._user[user.id].room;
+                client.join(id);
+                client.on('say', (msg)=>client.to(id).emit('say', user, msg));
+            }
         }
-        else {
-            console.log('CONNECT:', client.id, user);
-            client.on('disconnect', (reason)=>this.disconnect(client));
-            client.on('join', (msg)=>this.join(client));
-            this._user[user.id] = client;
-            client.emit('hello', user);
-        }
-        console.log('USER:', Object.keys(this._user)
-                                .map(id=>this._user[id].request.user.name));
+        console.log('CONNECT:', client.id, user);
+        client.on('disconnect', (reason)=>this.disconnect(client));
+        client.on('join', (msg)=>this.join(client));
+        if (! this._user[user.id]) this._user[user.id] = {};
+        this._user[user.id].socket = client;
+        client.emit('hello', user);
+        console.log('USER:', Object.keys(this._user));
     }
 
     disconnect(client) {
         let user = client.request.user;
-        console.log('DISCONNECT:', client.id, user);
-        delete this._user[user.id];
+        console.log('DISCONNECT:', client.id, user.id);
+        if (! this._user[user.id].room) delete this._user[user.id];
+        else                            delete this._user[user.id].socket;
         this._stage = this._stage.filter(c=>c.id != client.id);
-        this._io.emit('USER:', Object.keys(this._user)
-                                .map(id=>this._user[id].request.user.name));
+        console.log('USER:', Object.keys(this._user));
+        console.log('STAGE:', this._stage.map(c=>c.request.user.id));
     }
 
     join(client) {
-        console.log('JOIN:', client.id, client.request.user);
-        if (! this._stage.find(c=>c.id == client.id)) this._stage.push(client);
-        console.log('STAGE:', this._stage.map(c=>c.request.user.name));
+        let user = client.request.user;
+        if (this._user[user.id].room) return;
+        console.log('JOIN:', client.id, user.id);
+        this._stage.push(client);
+        console.log('STAGE:', this._stage.map(c=>c.request.user.id));
         this.createRoom();
     }
 
@@ -77,7 +86,9 @@ class Lobby {
         this._io.to(id).emit('room', room.map(c=>c.request.user));
         console.log('ROOM:', Object.keys(this._room)
                             .map(id=>({ id: id, member: this._room[id]
-                                .map(c=>c.request.user.name)})));
+                                .map(c=>c.request.user.id)})));
+        console.log('USER:', Object.keys(this._user));
+        console.log('STAGE:', this._stage.map(c=>c.request.user.id));
     }
 }
 
