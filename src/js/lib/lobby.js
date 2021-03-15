@@ -70,9 +70,11 @@ class Lobby {
             let user = client.request.user;
             this._user[user.id].room = id;
             client.join(id);
+            client.on('say', (msg)=>
+                        client.to(id).emit('say', client.request.user, msg));
         }
         this._room[id] = room;
-        this._io.to(id).emit('room', id);
+        this._io.to(id).emit('room', room.map(c=>c.request.user));
         console.log('ROOM:', Object.keys(this._room)
                             .map(id=>({ id: id, member: this._room[id]
                                 .map(c=>c.request.user.name)})));
