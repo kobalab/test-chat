@@ -68,9 +68,12 @@ body {
     display: table;
     max-width: 70%;
 }
+#chat img {
+    float: left;
+}
 #chat div.self > * {
     float: right;
 }
 #chat div.self > div {
-    background: #0f0;
+    background: #9f9;
 }

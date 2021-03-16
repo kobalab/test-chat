@@ -30,6 +30,11 @@ $(function(){
             }
             $('#chat').show();
         });
+        sock.on('say', (user, msg)=>{
+            $('<div>').append($('<img>').attr('src', user.icon))
+                      .append($('<div>').addClass('say').text(msg))
+                      .prependTo('#chat > div');
+        });
 
         $('#chat form').on('submit', ()=>{
             let msg = $('#chat form input[name="msg"]').val();
