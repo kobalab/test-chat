@@ -36,6 +36,11 @@ class Lobby {
         this._user[user.id].socket = client;
         client.emit('hello', user);
         console.log('USER:', Object.keys(this._user));
+        if (this._user[user.id].room) {
+            let id = this._user[user.id].room;
+            let room = this._room[id];
+            client.emit('room', room.map(c=>c.request.user));
+        }
     }
 
     disconnect(client) {
