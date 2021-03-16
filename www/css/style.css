@@ -52,6 +52,8 @@ body {
 }
 #chat > div > div {
     clear: both;
+    paiing: 5px;
+    padding: 5px;
 }
 #chat img {
     width:  32px;
@@ -64,6 +66,7 @@ body {
     border: solid #999 1px;
     border-radius: 10px;
     display: table;
+    max-width: 70%;
 }
 #chat div.self > * {
     float: right;
