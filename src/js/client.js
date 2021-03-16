@@ -5,9 +5,10 @@
 
 const $ = require('jquery');
 
-let sock;
-
 $(function(){
+
+    let sock;
+
     sock = io();
     sock.onAny(console.log);
     sock.on('hello', (user)=>{
@@ -27,8 +28,21 @@ $(function(){
                            .append($('<span>').text(user.name))
                            .appendTo($('#member'));
             }
-            $('#member').append($('<hr>'));
+            $('#chat').show();
         });
+
+        $('#chat form').on('submit', ()=>{
+            let msg = $('#chat form input[name="msg"]').val();
+            if (! msg) return false;
+            sock.emit('say', msg);
+            $('<div>').addClass('self')
+                      .append($('<img>').attr('src', user.icon))
+                      .append($('<div>').addClass('say').text(msg))
+                      .prependTo('#chat > div');
+            $('#chat form input[name="msg"]').val('');
+            return false;
+        });
+
         $('#error').empty();
 
         sock.emit('join');

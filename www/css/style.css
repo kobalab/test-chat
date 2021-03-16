@@ -38,3 +38,36 @@ body {
 #member {
     font-size: 14px;
 }
+#chat {
+    display: none;
+}
+#chat form {
+    text-align: center;
+}
+#chat input[name="msg"] {
+    width: 85%;
+}
+#chat > div {
+    margin-top: 1em;
+}
+#chat > div > div {
+    clear: both;
+}
+#chat img {
+    width:  32px;
+    height: 32px;
+    border-radius: 50%;
+}
+#chat .say {
+    font-size: 14px;
+    padding: 5px;
+    border: solid #999 1px;
+    border-radius: 10px;
+    display: table;
+}
+#chat div.self > * {
+    float: right;
+}
+#chat div.self > div {
+    background: #0f0;
+}
