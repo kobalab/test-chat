@@ -15,7 +15,10 @@ $(function(){
         else {
             $('#user span').text(user.name);
             $('#user img').attr('src', user.icon);
+            $('#user').show();
             sock.emit('join');
         }
+        sock.on('disconnect', (reason)=>$('#error').text('接続が切れました'));
     });
+    sock.on('error', (msg)=>$('#error').text(msg));
 });

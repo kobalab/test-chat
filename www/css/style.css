@@ -1,4 +1,9 @@
+#error {
+    font-size: 12px;
+    color: red;
+}
 #user {
+    display: none;
     text-align: right;
 }
 #user img {
