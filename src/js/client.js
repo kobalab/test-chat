@@ -9,7 +9,7 @@ $(function(){
 
     let sock;
 
-    sock = io();
+    sock = io("/", { path: location.pathname + 'socket.io/' });
     sock.onAny(console.log);
     sock.on('hello', (user)=>{
         if (! user) {
